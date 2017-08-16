@@ -46,14 +46,26 @@ $qa = {
 
 
 ### PARAMETERS/ ARGS 2 -> can pass arguments like so (clearer)
+# could provide default values e.g. $answer="unknown answer"s
+# can provide types to params e.g. [string]$answer
 $qa = {
     param($question, $answer)
+    if(!$answer) { $answer = "Error: You must provide an answer" }
     Write-Host "Question = $question, Answer = $answer"
 }
 
 &$qa "Which ice cream now?" "Still Solero"
 
 &$qa -question "Do you like powershell?" -answer "Very much!"
+# you can shortcut parameter names as long as powershell can work out which is which. Don't need order either!
+&$qa -a "Very much!!!" -q "Do you like powershell?"
+
+&$qa -q "Will this error?"
+
+
+
+
+
 
 
 
