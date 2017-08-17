@@ -64,6 +64,47 @@ $qa = {
 
 
 
+# pipelining #################################################################################
+# Use the process keyword
+Clear-Host
+
+
+
+Set-Location "C:\Users"  #set proper location here.
+
+$onlyPsFiles = 
+{
+    process{
+       if($_.Name -like "*.ps1")
+        {
+            return $_.Name;
+        }
+    }
+}
+Get-ChildItem | &$onlyPsFiles
+
+
+Clear-Host
+$onlyPsFiles2 = 
+{
+    param ($headerText)
+    begin { $retval =  $headerText + " `r`n"}
+    process{
+        if($_.Name -like "*.ps1")
+        {
+            $retval = $retval + "`t" + $_.Name + "`r`n"
+        }        
+    }
+    end { return $retVal }
+}
+
+Get-ChildItem | &$onlyPsFiles2 "Here are some ps files"
+
+
+
+
+
+
 
 
 
